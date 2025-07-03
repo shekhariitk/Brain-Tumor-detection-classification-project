@@ -23,3 +23,4 @@ __pycache__/
 .mypy_cache/
 # Sphinx documentation
 docs/_build/
+artifacts/
