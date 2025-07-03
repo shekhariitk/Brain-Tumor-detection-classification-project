@@ -1,0 +1,25 @@
+venv/
+dist/
+build/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.eggs/
+*.log
+*.sqlite3
+*.db
+*.DS_Store
+# PyInstaller
+*.spec
+# Jupyter Notebook
+.ipynb_checkpoints
+# Pytest
+.cache
+# Coverage reports
+.coverage
+# MyPy
+.mypy_cache/
+# Sphinx documentation
+docs/_build/
