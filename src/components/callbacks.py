@@ -39,8 +39,9 @@ class Callbacks:
         logging.info("Creating ReduceLROnPlateau")
         reduce_lr = ReduceLROnPlateau(
             monitor=self.monitor,
-            factor=0.2,
-            patience=2,
+            factor=0.5,
+            patience=4,
+            verbose=1,
             min_lr=1e-8,
             mode=self.mode
         )
@@ -51,10 +52,11 @@ class Callbacks:
             filepath=model_path,
             monitor=self.monitor,
             save_best_only=True,
-            mode=self.mode
+            mode=self.mode,
+            verbose=1
         )
 
-        callbacks_list = [early_stopping, reduce_lr, model_checkpoint]
+        callbacks_list = [ reduce_lr, model_checkpoint]
         logging.info(f"Callbacks list created: {callbacks_list}")
         return callbacks_list
 

@@ -95,11 +95,13 @@ dvc repro           # reproduce
 - Adds fully connected (Dense) layers and compiles the model.
 - Saves the base and updated model.
 
-### 2. `training.py`
+### 2. `model_training.py`
 - Loads model from `updated_base_model_path`.
 - Sets up training and test data generators.
 - Handles augmentation, class weights, and training logic.
 - Saves the final trained model.
+
+
 
 ### 3. `callbacks.py`
 - Creates callbacks for EarlyStopping, ReduceLROnPlateau, and ModelCheckpoint.
