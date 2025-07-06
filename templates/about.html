@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h3 class="text-center"><i class="fas fa-info-circle me-2"></i>About Brain Tumor Detection</h3>
+            </div>
+            <div class="card-body">
+                <h4>How It Works</h4>
+                <p>
+                    Our brain tumor detection system uses a deep convolutional neural network trained on thousands of 
+                    MRI scans to identify potential tumors. The model analyzes patterns in the MRI images that are 
+                    characteristic of different types of brain tumors.
+                </p>
+                
+                <div class="alert alert-warning">
+                    <h5><i class="fas fa-exclamation-triangle me-2"></i>Disclaimer</h5>
+                    <p>
+                        This system is designed to assist healthcare professionals and should not be used as a sole 
+                        diagnostic tool. Always consult with a qualified neurologist or radiologist for diagnosis.
+                    </p>
+                </div>
+                
+                <h4>Model Performance</h4>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 92%" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">92% Accuracy</div>
+                </div>
+                
+                <h4>Tumor Types Detected</h4>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item"><strong>Glioma:</strong> Tumors that originate in the glial cells</li>
+                    <li class="list-group-item"><strong>Meningioma:</strong> Tumors that arise from the meninges</li>
+                    <li class="list-group-item"><strong>Pituitary:</strong> Tumors in the pituitary gland</li>
+                    <li class="list-group-item list-group-item-success"><strong>No Tumor:</strong> Normal brain MRI</li>
+                </ul>
+                
+                <div class="d-grid gap-2 mt-4">
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">
+                        <i class="fas fa-brain me-2"></i>Try the Detector
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

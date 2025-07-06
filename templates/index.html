@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Brain Tumor Detection{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center"><i class="fas fa-brain me-2"></i>Brain Tumor Detection</h3>
+            </div>
+            <div class="card-body">
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    <div class="alert alert-warning" role="alert">
+                      {{ messages[0] }}
+                    </div>
+                  {% endif %}
+                {% endwith %}
+                
+                <!-- Circular Image Preview Area -->
+                <div class="d-flex justify-content-center mb-4">
+                    <div class="position-relative" style="width: 250px; height: 250px;">
+                        <img id="imagePreview" 
+                             src="{{ url_for('static', filename='images/default_mri.jpg') }}" 
+                             alt="MRI Preview" 
+                             class="img-fluid rounded-circle border border-4 border-primary"
+                             style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        <div id="imageLabel" class="position-absolute bottom-0 start-50 translate-middle-x bg-primary text-white px-3 py-1 rounded-pill">
+                            No image selected
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Upload Form -->
+                <form id="uploadForm" action="{{ url_for('predict') }}" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="mriFile" class="form-label">Upload Brain MRI Image</label>
+                        <input class="form-control" type="file" id="mriFile" name="file" accept="image/*" required>
+                        <div class="form-text">Supported formats: JPG, JPEG, PNG</div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="button" id="previewBtn" class="btn btn-outline-primary">
+                            <i class="fas fa-eye me-2"></i>Preview Image
+                        </button>
+                        <button type="submit" id="analyzeBtn" class="btn btn-primary btn-lg" disabled>
+                            <i class="fas fa-search me-2"></i>Analyze MRI
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('mriFile');
+    const previewBtn = document.getElementById('previewBtn');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const imagePreview = document.getElementById('imagePreview');
+    const imageLabel = document.getElementById('imageLabel');
+    
+    // Preview image when Preview button is clicked
+    previewBtn.addEventListener('click', function() {
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imageLabel.textContent = fileInput.files[0].name;
+                analyzeBtn.disabled = false;
+            }
+            
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            alert('Please select an MRI image first');
+        }
+    });
+    
+    // Enable Preview button when file is selected
+    fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            previewBtn.disabled = false;
+            analyzeBtn.disabled = true;
+        }
+    });
+    
+    // Form validation
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        if (!fileInput.files || fileInput.files.length === 0) {
+            e.preventDefault();
+            alert('Please preview an image first');
+        }
+        
+        // Optional: Add file size validation
+        if (fileInput.files[0].size > 10 * 1024 * 1024) { // 10MB
+            e.preventDefault();
+            alert('File size too large (max 10MB)');
+        }
+    });
+});
+</script>
+{% endblock %}
